@@ -16,6 +16,14 @@
 $ npm install
 ```
 
+## Guide
+
+```
+npm install --save kafkajs redis
+npm install --save @nestjs/config
+npm install --save joi
+```
+
 ## Compile and run the project
 
 ```bash
