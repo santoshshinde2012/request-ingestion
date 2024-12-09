@@ -28,7 +28,8 @@
     "joi": "^17.13.3",
     "kafkajs": "^2.2.4",
     "reflect-metadata": "^0.2.2",
-    "rxjs": "^7.8.1"
+    "rxjs": "^7.8.1",
+    "uuid": "^11.0.3"
   },
   "devDependencies": {
     "@nestjs/cli": "^10.4.8",

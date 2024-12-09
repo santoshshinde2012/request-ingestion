@@ -1,6 +1,7 @@
 import { Controller, Post, Get, Body, Param } from '@nestjs/common';
 import { KafkaProducerService } from '../services/kafka-producer.service';
 import { RedisService } from '../services/redis.service';
+import * as uuid from 'uuid';
 
 @Controller('inference')
 export class InferenceController {
@@ -13,7 +14,7 @@ export class InferenceController {
   async requestInference(
     @Body() data: any,
   ): Promise<{ correlationId: string }> {
-    const correlationId = `${Date.now()}`;
+    const correlationId = uuid.v4();
     await this.kafkaProducerService.sendRequestToKafka(correlationId, data);
     return { correlationId };
   }
