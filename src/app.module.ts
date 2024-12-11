@@ -1,14 +1,28 @@
 import { Module } from '@nestjs/common';
-import { InferenceController } from './controllers/inference.controller';
-import { InferenceService } from './application/services/inference.service';
-import { KafkaProducer } from './infrastructure/kafka/kafka.producer';
-import { RedisService } from './infrastructure/redis/redis.service';
 import { ConfigModule } from '@nestjs/config';
-import { ConfigService } from './infrastructure/config/config.service';
+import { InferenceController } from './inference/inference.controller';
+import { InferenceService } from './inference/inference.service';
+import { RedisService } from './redis/redis.service';
+import { AppConfigService } from './config/config.service';
+import kafkaConfig from './config/kafka.config';
+import redisConfig from './config/redis.config';
+import { KafkaProducerService } from './kafka/kafka-producer.service';
+import { KafkaConsumerService } from './kafka/kafka-consumer.service';
 
 @Module({
-  imports: [ConfigModule.forRoot()],
+  imports: [
+    ConfigModule.forRoot({
+      isGlobal: true,
+      load: [kafkaConfig, redisConfig],
+    }),
+  ],
   controllers: [InferenceController],
-  providers: [InferenceService, KafkaProducer, RedisService, ConfigService],
+  providers: [
+    AppConfigService,
+    RedisService,
+    KafkaProducerService,
+    KafkaConsumerService,
+    InferenceService,
+  ],
 })
 export class AppModule {}

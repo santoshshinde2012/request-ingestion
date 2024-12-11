@@ -3,21 +3,25 @@ import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class AppConfigService {
-  constructor(private configService: ConfigService) {}
+  constructor(private readonly configService: ConfigService) {}
 
-  get kafkaHost(): string {
-    return this.configService.get<string>('KAFKA_HOST');
+  get kafkaClientId(): string {
+    return this.configService.get<string>('kafka.clientId');
+  }
+
+  get kafkaBrokers(): string[] {
+    return this.configService.get<string[]>('kafka.brokers');
+  }
+
+  get kafkaTopic(): string {
+    return this.configService.get<string>('kafka.topic');
   }
 
   get redisHost(): string {
-    return this.configService.get<string>('REDIS_HOST');
+    return this.configService.get<string>('redis.host');
   }
 
   get redisPort(): number {
-    return this.configService.get<number>('REDIS_PORT');
-  }
-
-  get cacheTimeout(): number {
-    return this.configService.get<number>('CACHE_INVALIDATION_TIME');
+    return this.configService.get<number>('redis.port');
   }
 }
